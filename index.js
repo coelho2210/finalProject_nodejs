@@ -17,13 +17,10 @@ const PORT = process.env.PORT || 5000
     .use(bodyParser.urlencoded({ extended: true }))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
-    //    .get('/', (req, res) => res.render('pages/index'))
-    //    .get('/', function (req, res) { res.render('index');})
+   
 
     .get('/', function (req, res) {res.render('index', {weather: null, error: null});})
 
-    //.post('/', function (req, res) {res.render('index');})
-    // .post('/', function (req, res) {res.render('index');console.log(req.body.city);})
     
     .post('/', function (req, res) {
 	    let city = req.body.city;
@@ -36,7 +33,7 @@ const PORT = process.env.PORT || 5000
 			if(weather.main == undefined){
 			    res.render('index', {weather: null, error: 'Error, please try again'});
 			} else {
-        let weatherText = `It is ${weather.main.temp} degrees in ${weather.name}!`;
+        let weatherText = `It is ${weather.main.temp} Fahrenheit degrees in ${weather.name}!`;
         res.render('index', {weather: weatherText, error: null});
       }
     }
