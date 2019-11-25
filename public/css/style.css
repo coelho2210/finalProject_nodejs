@@ -27,7 +27,7 @@ fieldset {
   min-width: -webkit-min-content;
   padding: 30px;
 }
-.ghost-input, p {
+.input, p {
   display: block;
   font-weight:300;
   width: 100%;
@@ -49,10 +49,10 @@ fieldset {
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
-.ghost-input:focus {
+.input:focus {
   border-bottom:1px solid #ddd;
 }
-.ghost-button {
+.button {
   background-color: transparent;
   border:2px solid #ddd;
   padding:10px 30px;
@@ -64,7 +64,7 @@ fieldset {
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
-.ghost-button:hover {
+.button:hover {
   border:2px solid #515151;
 }
 p {
@@ -101,13 +101,13 @@ body {
 .header a.logo {
   font-size: 25px;
   font-weight: bold;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .header a.github {
   font-size: 19px;
   font-weight: bold;
-  align-items:right ;
+  /* text-align:right; */
 }
 .header a:hover {
   background-color: #ddd;
