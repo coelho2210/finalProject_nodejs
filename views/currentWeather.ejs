@@ -1,41 +1,15 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Weather</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  
+  <title>Current Weather</title>
 </head>
- 
-  <body>
-
-
-    <div id="content-area">
-<nav>
-  <ul id="header_style">
-    <li><a href="#default" class="logo"> Weather Application</a></li>
-    <li><a href="currentWeather.ejs" id="currentWeather"> Your Weather's location </a></li>
-    <li><a href="https://github.com/coelho2210/finalProject_nodejs" id="github">Github</a></li>
-    
-  </ul>
-</nav>
-
-    <div class="container">
-      <fieldset>
-        <form action="/" method="post">
-          <input name="city" type="text" class="input" placeholder="Enter a City" required><br> <br>
-          <input type="submit" class="button" value="click here">
-        </form>
-
-<% if(weather !== null){ %>
-          <p><%= weather %></p>
-        <% } %>
-
-        <% if(error !== null){ %>
-          <p><%= error %></p>
-       <% } %>
-      </fieldset>
-    </div>
-  </div>
-  </body>
+<body>
+  <h1>Coming Soon</h1>
+</body>
 </html>
