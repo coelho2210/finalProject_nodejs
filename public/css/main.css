@@ -1,0 +1,48 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: azure;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgb(47,151,162),rgb(48,63,143));
+}
+
+.location{
+    width: 50%;
+    height: 30vh;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+}
+.temperature{
+    width: 50%;
+    height: 30vh;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+   
+}
+
+
+.degree-section span{
+    margin: 10px;
+    font-size: 30px;
+}
+.degree-section{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+.degree-section h2{
+    font-size: 42px;
+}
