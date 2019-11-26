@@ -2,7 +2,7 @@
       #content-area{
         background-color: #b6d5f8;
         margin: 0 auto;
-        max-width: 70%;
+        max-width: 100%;
         
       }
       
@@ -10,8 +10,7 @@ nav{
   justify-content: space-between;
   align-items: center;
   background-color: #515151;
-  padding: 8px;
-  
+  padding: 8px; 
 }
 
 nav ul{
