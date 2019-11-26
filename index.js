@@ -13,7 +13,7 @@ const pool = new Pool({
 const PORT = process.env.PORT || 5000
 
     express()
-    .use(express.static(path.join(__dirname, 'public')))
+    .use(express.static(path.join(__dirname, '/public')))
     .use(bodyParser.urlencoded({ extended: true }))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
