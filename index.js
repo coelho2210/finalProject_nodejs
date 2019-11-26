@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000
    
 
     .get('/', function (req, res) {res.render('index', {weather: null, error: null});})
+    .get('/', function (req, res) {res.render('currentWeather.ejs', {weather: null, error: null});})
 
    .get('/currentWeather', function (req, res) 
     {res.sendFile('currentWeather.ejs', {root:__dirname + "/views/partials"});})

@@ -23,6 +23,10 @@ p {
 }
 
 body { 
+  background-image: url("image/openWeatherMap.png");  
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 250px auto;
   /* margin: 0; */
   font-family: Arial, Helvetica, sans-serif;
 }
