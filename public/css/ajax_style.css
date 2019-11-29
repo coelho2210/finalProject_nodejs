@@ -1,0 +1,30 @@
+
+body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: azure;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgb(47,151,162),rgb(48,63,143));
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("image/openWeatherMap.png");  
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 250px auto;
+    /* margin: 0; */
+    font-family: Arial, Helvetica, sans-serif;
+   
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+* {box-sizing: border-box;}
+      #content-area{
+        background-color: #b6d5f8;
+        margin: 0 auto;
+        max-width: 100%;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Api</title>
+  <link rel="stylesheet" href="ajax_style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" ></script>
+</head>
+<id="body"></id>
+<body  style="background-color:skyblue">
+    <center><font size="5">Enter City Name:</font>
+        <font size="10"><input id="city" width="120" height="148"></input></font>
+        <br><br><button id="getWeatherForcast">GET WEATHER</button></center>
+        <center><div class="ShowWeatherForcast"></div></center>
+    </id>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      
+      $("#getWeatherForcast").click(function(){
+                
+                var city = $("#city").val();
+            var key  = '4de3768c62b67fe359758977a3efc069';
+            
+            $.ajax({
+              url:'http://api.openweathermap.org/data/2.5/weather',
+              dataType:'json',
+              type:'GET',
+              data:{q:city, appid: key, units: 'metric'},
+
+              success: function(data){
+                var wf = '';
+                $.each(data.weather, function(index, val){
+
+                  wf += '<p><b>' + data.name + "</b><img src=http://openweathermap.org/img/wn/"+ val.icon + ".png></p>"+ data.main.temp + '&deg;C ' + 
+                  ' | ' + val.main + ", " + val.description 
+
+                });
+              
+               $(".ShowWeatherForcast").html(wf);
+              }
+
+            })
+
+      });
+    });
+  </script>
+
+</body>
+</html>

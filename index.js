@@ -27,7 +27,10 @@ const PORT = process.env.PORT || 5000
     {res.render("currentWeather")}
     )
     
-
+    .get('/weather_ajax', function (req, res) 
+    //{res.sendFile('currentWeather.ejs', {root:__dirname + "/views/partials"});}
+    {res.render("weather_ajax")}
+    )
     
     .post('/', function (req, res) {
 	    let city = req.body.city;
