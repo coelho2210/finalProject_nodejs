@@ -1,22 +1,36 @@
 
-body{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: azure;
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(rgb(47,151,162),rgb(48,63,143));
-    font-family: 'Open Sans', sans-serif;
-    background-image: url("image/openWeatherMap.png");  
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: 250px auto;
+#conteiner{
+  /* border-style: solid; */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: azure;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#image{
+    width: 250px;
+    /* */
+}
+
+body { 
+    border-style: solid;
+    border-color: azure;
+    background: url("image/openWeatherMap.png") no-repeat, left top;  
+    /* background-repeat: no-repeat;
+    background-position: left top; */
+    background-size: 250px auto; 
+    background: linear-gradient(rgb(47,151,162),rgb(48,63,143)); 
     /* margin: 0; */
     font-family: Arial, Helvetica, sans-serif;
-   
-}
+  }
+
+  #conteiner2{
+    border-style:solid;
+  }
 
 * {
     padding: 0;
