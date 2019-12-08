@@ -1,80 +1,162 @@
-const cool = require('cool-ascii-faces')
-    const bodyParser = require('body-parser');
-    const express = require('express')
-    const request = require('request');
-    const apiKey = '7036d1b6c7fdb0dc512c2dc0fd0420fa';
-    const path = require('path')
-    const { Pool } = require('pg');
+require("dotenv").config();
+const cool = require("cool-ascii-faces");
+const bodyParser = require("body-parser");
+const express = require("express");
+const request = require("request");
+const apiKey = "7036d1b6c7fdb0dc512c2dc0fd0420fa";
+const path = require("path");
+// var User = require('./models/user');
+// const session = require('express-session')
+
+
+const app = express();
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set("/views", path.join(__dirname, "/views"));
+app.set("view engine", "ejs");
+
+// connecting to my dataBase
+const { Pool } = require("pg");
 const pool = new Pool({
-	connectionString: process.env.DATABASE_URL,
-	ssl: true
-    });
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
-    express()
-    .use(express.static(path.join(__dirname, '/public')))
-    .use(bodyParser.urlencoded({ extended: true }))
-    .set('/views', path.join(__dirname, '/views'))
-    .set('view engine', 'ejs')
-   
 
-    .get('/', function (req, res) {res.render('index', {weather: null, error: null});})
+//  app.get("/login", function(req, res) {
+//     res.render("login.html",{root:__dirname + "/public"})
+// });
+
+// app.get('/', verifyLogin, (req, res) => {
+  
+//     res.render('/login', {data: response['data']['data']})
+//   });
   
 
-   .get('/currentWeather', function (req, res) 
-    //{res.sendFile('currentWeather.ejs', {root:__dirname + "/views/partials"});}
-    {res.render("currentWeather")}
-    )
-    
-    .get('/weather_ajax', function (req, res) 
-    //{res.sendFile('currentWeather.ejs', {root:__dirname + "/views/partials"});}
-    {res.render("weather_ajax")}
-    )
-    
-    .post('/', function (req, res) {
-	    let city = req.body.city;
-	    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
-	    request(url, function (err, response, body) {
-		    if(err){
-			res.render('index', {weather: null, error: 'Error, please try again'});
-		    } else {
-			let weather = JSON.parse(body)
-			if(weather.main == undefined){
-			    res.render('index', {weather: null, error: 'Error, please try again'});
-			} else {
+app.get('/login', (req, res) => {
+  res.render('login')
+});
+
+app.post('/login', handleLogin);
+app.get('/logout', handleLogout);
+
+
+// // goes to teh signup page
+//  app.get("/signup", function(req, res) {
+//    res.sendFile("signup.html",{root:__dirname + "/public"})
+//  });
+
+
+
+// that takes me to my app
+app.get("/", function(req, res) {
+  res.render("index", { weather: null, error: null });
+});
+
+
+//get the currentWeather page
+app.get("/currentWeather", function(
+  req,
+  res
+) 
+{
+  res.render("currentWeather");
+});
+
+
+//get the ajax page
+app.get("/weather_ajax", function(
+  req,
+  res
+) 
+{
+  res.render("weather_ajax");
+});
+
+
+
+app.post("/", function(req, res) {
+  let city = req.body.city;
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
+  request(url, function(err, response, body) {
+    if (err) {
+      res.render("index", { weather: null, error: "Error, please try again" });
+    } else {
+      let weather = JSON.parse(body);
+      if (weather.main == undefined) {
+        res.render("index", {
+          weather: null,
+          error: "Error, please try again"
+        });
+      } else {
         let weatherText = `It is ${weather.main.temp} Fahrenheit degrees in ${weather.name}!`;
-        res.render('index', {weather: weatherText, error: null});
+        res.render("index", { weather: weatherText, error: null });
       }
     }
   });
-})
+});
 
+app.get("/cool", (req, res) => res.send(cool()));
+app.get("/times", (req, res) => res.send(showTimes()));
+app.get("/db", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT * FROM test_table");
+    const results = { results: result ? result.rows : null };
+    res.render("pages/db", results);
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
 
-    .get('/cool', (req, res) => res.send(cool()))
-    .get('/times', (req, res) => res.send(showTimes()))
-    .get('/db', async (req, res) => {
-	    try {
-		const client = await pool.connect()
-		const result = await client.query('SELECT * FROM test_table');
-		const results = { 'results': (result) ? result.rows : null};
-		res.render('pages/db', results );
-		client.release();
-	    } catch (err) {
-		console.error(err);
-		res.send("Error " + err);
-	    }
-    })
-    
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-
-    .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-    showTimes = () => {
-  let result = ''
-  const times = process.env.TIMES || 5
+showTimes = () => {
+  let result = "";
+  const times = process.env.TIMES || 5;
   for (i = 0; i < times; i++) {
-    result += i + ' '
+    result += i + " ";
   }
   return result;
+};
+
+function handleLogin(req, res) {
+  var result = {success: false};
+
+  if (req.body.username == "admin" && req.body.password == "cs313") {
+    req.session.user = req.body.username;
+    result = {success: true};
+  }
+
+  res.redirect('back');
+}
+ 
+function handleLogout(req, res) {
+  if (req.session.user) {
+    req.session.destroy();
+  }
+
+  res.redirect('/')
+}
+
+function verifyLogin(req, res, next) {
+  if (req.session.user) {
+    // logged in
+    next();
+  } else {
+    // not logged in
+    res.render('login')
+  }
+}
+
+function logRequest(req, res, next) {
+  console.log("Received a request for: " + req.url);
+
+  next();
 }
