@@ -1,8 +1,14 @@
-CREATE TABLE member 
-( member_id    SERIAL PRIMARY KEY
-, username     VARCHAR (50)   NOT NULL UNIQUE 
-, pass_word    VARCHAR (250)  NOT NULL
-, first_name   VARCHAR (50)   NOT NULL
-, last_name    VARCHAR (50)   NOT NULL
-, email        VARCHAR (50)   NOT NULL UNIQUE
+DROP TABLE USERS;
+
+CREATE TABLE USERS
+(
+	id SERIAL PRIMARY KEY NOT NULL,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100),
+	username VARCHAR (100) NOT NULL,
+	pw VARCHAR (255) NOT NULL
 );
+
+
+INSERT INTO USERS (first_name, last_name, username, pw)
+VALUES ('Leo', 'Silva','coelho', '123456');

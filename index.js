@@ -5,8 +5,6 @@ const express = require("express");
 const request = require("request");
 const apiKey = "7036d1b6c7fdb0dc512c2dc0fd0420fa";
 const path = require("path");
-// var User = require('./models/user');
-// const session = require('express-session')
 
 
 const app = express();
@@ -16,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("/views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
+
 
 // connecting to my dataBase
 const { Pool } = require("pg");
@@ -37,19 +36,18 @@ const PORT = process.env.PORT || 5000;
 //   });
   
 
-app.get('/login', (req, res) => {
-  res.render('login')
-});
+// app.get('/login', (req, res) => {
+//   res.render('login')
+// });
 
-app.post('/login', handleLogin);
-app.get('/logout', handleLogout);
+// app.post('/login', handleLogin);
+// app.get('/logout', handleLogout);
 
 
 // // goes to teh signup page
 //  app.get("/signup", function(req, res) {
 //    res.sendFile("signup.html",{root:__dirname + "/public"})
 //  });
-
 
 
 // that takes me to my app
@@ -126,69 +124,38 @@ showTimes = () => {
   return result;
 };
 
-function handleLogin(req, res) {
-  var result = {success: false};
+// function handleLogin(req, res) {
+//   var result = {success: false};
 
-  if (req.body.username == "admin" && req.body.password == "cs313") {
-    req.session.user = req.body.username;
-    result = {success: true};
-  }
+//   if (req.body.username == "admin" && req.body.password == "cs313") {
+//     req.session.user = req.body.username;
+//     result = {success: true};
+//   }
 
-  res.redirect('back');
-}
+//   res.redirect('back');
+// }
  
-function handleLogout(req, res) {
-  if (req.session.user) {
-    req.session.destroy();
-  }
+// function handleLogout(req, res) {
+//   if (req.session.user) {
+//     req.session.destroy();
+//   }
 
-  res.redirect('/')
-}
+//   res.redirect('/')
+// }
 
-function verifyLogin(req, res, next) {
-  if (req.session.user) {
-    // logged in
-    next();
-  } else {
-    // not logged in
-    res.render('login')
-  }
-}
+// function verifyLogin(req, res, next) {
+//   if (req.session.user) {
+//     // logged in
+//     next();
+//   } else {
+//     // not logged in
+//     res.render('login')
+//   }
+// }
 
-function logRequest(req, res, next) {
-  console.log("Received a request for: " + req.url);
+// function logRequest(req, res, next) {
+//   console.log("Received a request for: " + req.url);
 
-  next();
-}
+//   next();
+// }
 
-
-
-
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var path = require('path');
-var controller = require('./controllers/user.controller');
-
-var port = 8080;
-var db = 'mongodb://localhost/userExample1';
-
-mongoose.connect(db);
-
-app.use(express.static(path.join(__dirname, 'views')));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.get('/', function(req, res) {
-  res.render('index.html');
-});
-
-app.post('/', controller.register);
-
-app.listen(port, function() {
-  console.log('app listening on port ' + port);
-});
