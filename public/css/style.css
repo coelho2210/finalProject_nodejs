@@ -24,13 +24,16 @@ p {
 
 body { 
   background-image: url("image/openWeatherMap.png");  
+  /* background: linear-gradient(rgb(47,151,162),rgb(48,63,143));  */
   background-repeat: no-repeat;
   background-position: left top;
   background-size: 250px auto;
-  /* margin: 0; */
+  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  /* background: linear-gradient(rgb(47,151,162),rgb(48,63,143)); */
+  /* background-color: black; */
 }
+
+
 
 nav a{
   color: white;
