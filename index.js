@@ -69,7 +69,7 @@ app.post("/addUser", (req, res)=>{
       console.log(err)
     } else {
       console.log(data.rows[0].id)
-      res.redirect("/")
+      res.redirect("/html/signup.html")
     }
   })
 })
