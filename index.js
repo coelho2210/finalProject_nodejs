@@ -26,9 +26,53 @@ const pool = new Pool({
 const PORT = process.env.PORT || 5000;
 
 
-//  app.get("/login", function(req, res) {
-//     res.render("login.html",{root:__dirname + "/public"})
+app.get("/", function(req, res) {
+  res.sendFile("login.html",{root:__dirname + "/public/html"})
+});
+
+app.post("/login", (req, res)=>{
+  var user = req.body.username
+  var pass = req.body.password
+
+  var sql = "SELECT username FROM USERS WHERE username = $1"
+  var params = [user]
+  pool.query(sql, params, function(err, data){
+    if (err) {
+      console.log("Error in query...")
+      console.log(err)
+    } else {
+      if (data.rows.length == 0) {
+        res.redirect("/")
+      } else {
+        res.redirect("/mainPage")
+      }
+      console.log(data.rows)
+      
+    }
+
+  })
+
+})
+
+// app.get("/signupPage", function(req, res) {
+//   res.sendFile("signup.html",{root:__dirname + "/public/html"})
 // });
+
+app.post("/addUser", (req, res)=>{
+  var user = req.body.username
+  var pass = req.body.password
+  var sql = "INSERT INTO USERS (username, pw) VALUES ($1, $2) RETURNING id"
+  var params = [user, pass]
+  pool.query(sql, params, function(err, data){
+    if (err) {
+      console.log("Error in query...")
+      console.log(err)
+    } else {
+      console.log(data.rows[0].id)
+      res.redirect("/")
+    }
+  })
+})
 
 // app.get('/', verifyLogin, (req, res) => {
   
@@ -51,7 +95,7 @@ const PORT = process.env.PORT || 5000;
 
 
 // that takes me to my app
-app.get("/", function(req, res) {
+app.get("/mainPage", function(req, res) {
   res.render("index", { weather: null, error: null });
 });
 
@@ -77,7 +121,7 @@ app.get("/weather_ajax", function(
 
 
 
-app.post("/", function(req, res) {
+app.post("/displayWeather", function(req, res) {
   let city = req.body.city;
   let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
   request(url, function(err, response, body) {
