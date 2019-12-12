@@ -2,15 +2,17 @@ require("dotenv").config();
 const cool = require("cool-ascii-faces");
 const bodyParser = require("body-parser");
 const express = require("express");
+const session = require('express-session')
 const request = require("request");
 const apiKey = "7036d1b6c7fdb0dc512c2dc0fd0420fa";
 const path = require("path");
 
-
+var sess;
 const app = express();
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(session({secret: 'sssshhhhhh', saveUninitialized: true, resave: true}))
 app.use(express.urlencoded({ extended: true }));
 app.set("/views", path.join(__dirname, "/views"));
 app.set("view engine", "ejs");
@@ -33,18 +35,24 @@ app.get("/", function(req, res) {
 app.post("/login", (req, res)=>{
   var user = req.body.username
   var pass = req.body.password
+  sess = req.session
 
-  var sql = "SELECT username FROM USERS WHERE username = $1"
+  var sql = "SELECT username, pw FROM USERS WHERE username = $1"
   var params = [user]
   pool.query(sql, params, function(err, data){
     if (err) {
       console.log("Error in query...")
       console.log(err)
     } else {
-      if (data.rows.length == 0) {
-        res.redirect("/")
+      if (data.rowCount) {
+        if (pass == data.rows[0].pw) {
+          sess.username = user;
+          res.redirect("/mainPage")
+        } else {
+          res.redirect("/")
+        }
       } else {
-        res.redirect("/mainPage")
+        res.redirect("/")
       }
       console.log(data.rows)
       
@@ -93,10 +101,23 @@ app.post("/addUser", (req, res)=>{
 //    res.sendFile("signup.html",{root:__dirname + "/public"})
 //  });
 
+app.get('/logout', (req, res) => {
+    req.session.destroy(function(err){
+      if(err){
+         return console.log("Error in Logout " + err)
+      }
+       res.redirect("/");
+    });
+})
 
 // that takes me to my app
 app.get("/mainPage", function(req, res) {
-  res.render("index", { weather: null, error: null });
+  sess = req.session;
+  if (sess.username) {
+    res.render("index", { weather: null, error: null });
+  } else {
+    res.redirect("/");
+  }
 });
 
 
@@ -179,10 +200,7 @@ showTimes = () => {
 //   res.redirect('back');
 // }
  
-// function handleLogout(req, res) {
-//   if (req.session.user) {
-//     req.session.destroy();
-//   }
+
 
 //   res.redirect('/')
 // }
