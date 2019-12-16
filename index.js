@@ -6,6 +6,7 @@ const session = require('express-session')
 const request = require("request");
 const apiKey = "7036d1b6c7fdb0dc512c2dc0fd0420fa";
 const path = require("path");
+const bcrypt = require("bcryptjs")
 
 var sess;
 const app = express();
@@ -80,6 +81,19 @@ app.post("/addUser", (req, res)=>{
       res.redirect("/html/signup.html")
     }
   })
+//   bcrypt.compare(pass, data[0].password, function(err, response) {
+//     if (response === false) {
+//         console.log("Bad Password!")
+//     }
+// });
+
+// console.log("Back from DB with result:");
+// console.log(result.rows);
+
+// const username = data[0].username
+// var params = {username: username} 
+// res.render("login", params)
+// res.end()
 })
 
 // app.get('/', verifyLogin, (req, res) => {
@@ -189,22 +203,6 @@ showTimes = () => {
   return result;
 };
 
-// function handleLogin(req, res) {
-//   var result = {success: false};
-
-//   if (req.body.username == "admin" && req.body.password == "cs313") {
-//     req.session.user = req.body.username;
-//     result = {success: true};
-//   }
-
-//   res.redirect('back');
-// }
- 
-
-
-//   res.redirect('/')
-// }
-
 // function verifyLogin(req, res, next) {
 //   if (req.session.user) {
 //     // logged in
@@ -215,9 +213,15 @@ showTimes = () => {
 //   }
 // }
 
-// function logRequest(req, res, next) {
-//   console.log("Received a request for: " + req.url);
 
-//   next();
-// }
 
+// const showSignup = () => {
+//   $('#login').hide();
+//   $('#signup').show();
+//   $('#newUsername').focus();
+// };
+// const showLogin = () => {
+//   $('#signup').hide();
+//   $('#login').show();
+//   $('#username').focus();
+// };
